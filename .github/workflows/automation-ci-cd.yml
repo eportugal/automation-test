@@ -1,0 +1,27 @@
+name: Automation CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  qa-automation-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.12.1
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./automation
+
+      - name: Run Cypress tests
+        run: npm run cypress:headless
+        working-directory: ./automation
